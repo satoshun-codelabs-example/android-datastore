@@ -24,10 +24,13 @@ import androidx.datastore.preferences.createDataStore
 import androidx.datastore.preferences.edit
 import androidx.datastore.preferences.emptyPreferences
 import androidx.datastore.preferences.preferencesKey
+import com.codelab.android.datastore.ui.SingleDataStore
+import com.codelab.android.datastore.ui.singleDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
+import kotlin.properties.Delegates
 
 private const val USER_PREFERENCES_NAME = "user_preferences"
 
@@ -52,6 +55,9 @@ enum class SortOrder {
  * Class that handles saving and retrieving user preferences
  */
 class UserPreferencesRepository(context: Context) {
+    private val dataStore2: SingleDataStore<UserPreferences> = context.singleDataStore(
+      name = "user"
+    )
     private val dataStore: DataStore<Preferences> =
       context.createDataStore(
         name = "user",
